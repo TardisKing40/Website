@@ -47,3 +47,37 @@ body {
     font-size: 1.2rem;
     text-align: center;
 }
+
+body {
+    cursor: none;
+    padding: 0;
+    overflow: hidden;
+    /* background-color: #000000; */
+}
+
+.dot {
+    pointer-events: none;
+    z-index: 10;
+    position: fixed;
+    height: 7px;
+    width: 7px;
+    background-color: #8c8c8c;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.ball {
+    pointer-events: none;
+    --ball-size: 50px;
+    position: fixed;
+    height: var(--ball-size);
+    width: var(--ball-size);
+    border-radius: 50%;
+    border: 1.5px solid #ffffff;
+    top: calc(var(--ball-size) / 2 * -1);
+    left: calc(var(--ball-size) / 2 * -1);
+    cursor: default;
+    background-color: transparent;
+}

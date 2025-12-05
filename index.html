@@ -27,6 +27,92 @@
     <footer>
         &copy; Twodis | Helping to support the open source community.
     </footer>
+
+
+    <div id="mouseEffects">
+        <div class="dot">
+            <script>
+                const dot = document.querySelector('.dot');
+                window.addEventListener('mousemove', (e) => {
+                    dot.style.left = e.x + 'px';
+                    dot.style.top = e.y + 'px';
+                });
+            </script>
+        </div>
+        <div class="ball">
+        <script>
+            /* script2.js */
+            // making a ball follow the mouse and squeeze towards it
+
+            const ballElement = document.querySelector(".ball");
+
+            const mouse = {x : 0, y : 0};
+            const pre_mouse = {x : 0, y : 0};
+            const ball = {x : 0, y : 0};
+            let currentScale = 0;
+            let currentAngle = 0;
+            let size = 50 // Initial size
+
+            const minSize = size; // Minimum size
+            const maxSize = 20; // Maximum size
+
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.x;
+                mouse.y = e.y;
+            });
+
+            const speed = 0.17
+            const tick = () => {
+
+                // Follow
+                ball.x += (mouse.x - ball.x) * speed;
+                ball.y += (mouse.y - ball.y) * speed;
+
+                const translateTransform = `translate(${ball.x}px, ${ball.y}px)`;
+
+                // Squeeze
+                const deltaX = mouse.x - pre_mouse.x;
+                const deltaY = mouse.y - pre_mouse.y;
+                pre_mouse.x = mouse.x;
+                pre_mouse.y = mouse.y;
+
+                const mouseVelocity = Math.min(Math.sqrt(deltaX**2 + deltaY**2) * 4, 90);
+                const scaleValue = ((mouseVelocity /80) * 0.5).toFixed(2);
+                currentScale += (scaleValue - currentScale) * speed;
+                const scaleTransform = `scale(${1 + currentScale}, ${1 - currentScale})`;
+
+                // Rotate
+                //console.log(Math.round(mouseVelocity))
+                const angle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
+                if (mouseVelocity > 20) {
+                    currentAngle = angle
+                }
+                const rotateTransform = `rotate(${currentAngle}deg)`;
+
+                // Enlarge
+                if (mouseVelocity > 1000) {
+                    const sizeFactor = Math.min(mouseVelocity / 150, 1); // Scale from 0 to 1
+                    let size = minSize + (maxSize - minSize) * sizeFactor;
+                    ballElement.style.width = size + 'px';
+                    ballElement.style.height = size + 'px';
+                } else {
+                    if (size > minSize) {
+                        size += 0.5
+                    }
+                    ballElement.style.width = size + 'px';
+                    ballElement.style.height = size + 'px';
+                }
+                // Apply the transformation
+                ballElement.style.transform = `${translateTransform} ${rotateTransform} ${scaleTransform}`;
+
+                window.requestAnimationFrame(tick);
+
+            }
+
+
+            tick();
+        </script>
+    </div>
 </body>
 
 </html>
