@@ -1,3 +1,0 @@
-
-# Matrix federation https://github.com/matrix-org/synapse/blob/master/docs/federate.md
-include: [".well-known"]
