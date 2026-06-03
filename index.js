@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 
 
-app.use(express.static('public'))
+app.use(express.static('public', {extensions:['html']}));
 app.use('/.well-known', express.static('.well-known'));
 
 app.use((req, res, next) => {
